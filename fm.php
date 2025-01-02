@@ -322,17 +322,35 @@ if ($ip_ruleset != 'OFF') {
     }
 }
 
+if (!getenv("PASSWORD") !== null) {
+    echo "Please set PASSWORD in .env file";
+    exit;
+}
 
-$PASSWORD = getenv("PASSWORD");
-$time = time();
-$TOKEN = hash('sha256', $PASSWORD + $time);
+if (!getenv("HOME") !== null) {
+    echo "Please set HOME in .env file";
+    exit;
+}
 
-if ($_GET["token"] == $TOKEN) {
+function token($mod = 0)
+{
+    $PASSWORD = getenv("PASSWORD");
+    $time = floor(time() / 60) + $mod;
+    return hash('sha256', $PASSWORD . $time);
+}
+
+$tokenBefore = token(-1);
+$tokenNow = token(0);
+$tokenAfter = token(1);
+
+if ($_GET["token"] == $tokenBefore || $_GET["token"] == $tokenNow || $_GET["token"] == $tokenAfter) {
     $_SESSION[FM_SESSION_ID]['logged'] = "admin";
 }
 
 if (!isset($_SESSION[FM_SESSION_ID]['logged'])) {
+    $HOME = getenv("HOME");
     echo "Please use Admin -> Open file manager in inquiro";
+    echo "<scrip>setTimeout(function(){window.location = $HOME;}, 1000);</script>";
     exit;
 }
 
