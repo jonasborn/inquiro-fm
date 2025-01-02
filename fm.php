@@ -322,7 +322,15 @@ if ($ip_ruleset != 'OFF') {
     }
 }
 
+if (!getenv("PASSWORD") !== null) {
+    echo "Please set PASSWORD in .env file";
+    exit;
+}
 
+if (!getenv("HOME") !== null) {
+    echo "Please set HOME in .env file";
+    exit;
+}
 
 function token($mod = 0)
 {
