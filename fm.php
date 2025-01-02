@@ -322,15 +322,7 @@ if ($ip_ruleset != 'OFF') {
     }
 }
 
-if (!getenv("PASSWORD") !== null) {
-    echo "Please set PASSWORD in .env file";
-    exit;
-}
 
-if (!getenv("HOME") !== null) {
-    echo "Please set HOME in .env file";
-    exit;
-}
 
 function token($mod = 0)
 {
@@ -349,8 +341,10 @@ if ($_GET["token"] == $tokenBefore || $_GET["token"] == $tokenNow || $_GET["toke
 
 if (!isset($_SESSION[FM_SESSION_ID]['logged'])) {
     $HOME = getenv("HOME");
+    echo "<html><head><title>Access Denied</title></head><body>";
     echo "Please use Admin -> Open file manager in inquiro";
-    echo "<scrip>setTimeout(function(){window.location = $HOME;}, 1000);</script>";
+    echo '<script>setTimeout(function(){window.location = "' . $HOME . '";}, 1000);</script>';
+    echo "</body></html>";
     exit;
 }
 
