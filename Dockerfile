@@ -21,6 +21,6 @@ RUN docker-php-ext-install \
 
 WORKDIR /var/www/html
 
-COPY tinyfilemanager.php index.php
+COPY fm.php index.php
 
 CMD ["sh", "-c", "php -S 0.0.0.0:80"]
