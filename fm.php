@@ -331,6 +331,11 @@ if ($_GET["token"] == $TOKEN) {
     $_SESSION[FM_SESSION_ID]['logged'] = "admin";
 }
 
+if (!isset($_SESSION[FM_SESSION_ID]['logged'])) {
+    echo "Please use Admin -> Open file manager in inquiro";
+    exit;
+}
+
 
 // update root path
 if ($use_auth && isset($_SESSION[FM_SESSION_ID]['logged'])) {
